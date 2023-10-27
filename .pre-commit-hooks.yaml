@@ -1,0 +1,6 @@
+-   id: protect-files
+    name: Protect files
+    description: Protects certain files from being changed.
+    entry: protect-files
+    language: python
+    stages: [commit, manual]
