@@ -5,7 +5,6 @@ repos:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: debug-statements
-    -   id: double-quote-string-fixer
     -   id: name-tests-test
     -   id: requirements-txt-fixer
 -   repo: https://github.com/asottile/setup-cfg-fmt
@@ -26,20 +25,21 @@ repos:
     hooks:
     -   id: pyupgrade
         args: [--py38-plus]
-# -   repo: https://github.com/hhatto/autopep8
-#     rev: v2.0.4
-#     hooks:
-#     -   id: autopep8
-# -   repo: https://github.com/PyCQA/flake8
-#     rev: 6.1.0
-#     hooks:
-#     -   id: flake8
+-   repo: https://github.com/hhatto/autopep8
+    rev: v2.0.4
+    hooks:
+    -   id: autopep8
+-   repo: https://github.com/psf/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+        language_version: python3
+-   repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+    -   id: flake8
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.6.1
     hooks:
     -   id: mypy
         additional_dependencies: [types-all]
--   repo: https://github.com/PyCQA/prospector
-    rev: 1.10.0 # The version of Prospector to use, if not 'master' for latest
-    hooks:
-    -   id: prospector

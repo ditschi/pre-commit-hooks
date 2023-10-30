@@ -7,7 +7,8 @@ from typing import Sequence
 
 
 def protected_files_changed(
-    staged_files: list[str], protected_files_globs: list[str]
+    staged_files: list[str],
+    protected_files_globs: list[str],
 ) -> list[str]:
     protected_changed = []
     for filename in staged_files:
@@ -21,7 +22,7 @@ def protected_files_changed(
 def unstage_files(filepaths: list[str]) -> None:
     command = ["git", "reset", "--"]
     command.extend(filepaths)
-    subprocess.run(command, check=False)
+    subprocess.run(command, check=False, shell=False)
 
 
 def main(argv: Sequence[str] | None = None) -> int:
