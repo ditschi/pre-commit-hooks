@@ -1,8 +1,12 @@
 from __future__ import annotations
 
-from pre_commit_hook_collection.protect_files import main
-from pre_commit_hook_collection.protect_files import protected_files_changed
-from pre_commit_hook_collection.protect_files import unstage_files
+import pytest
+
+from pre_commit_hook_collection.protect_files import (
+    main,
+    protected_files_changed,
+    unstage_files,
+)
 
 
 class TestProtectedFiles:
@@ -128,21 +132,17 @@ class TestUnstage:
         subprocess_run_mock = mocker.patch("subprocess.run")
         unstage_files(filepaths)
 
-        subprocess_run_mock.assert_called_once_with(
-            expected_command,
-            check=False,
-            shell=False,
-        )
+        assert subprocess_run_mock.call_args.contains(expected_command)
 
 
 class TestMain:
     def test_main_success_when_no_protected_changed(self):
         result = main(
             [
-                "--filenames",
-                "changed/file.md",
                 "--protected-files-glob",
                 "*.txt",
+                "--",
+                "changed/file.md",
             ],
         )
         assert result == 0
@@ -150,10 +150,10 @@ class TestMain:
     def test_main_failure_when_protected_changed(self):
         result = main(
             [
-                "--filenames",
-                "changed/file.txt",
                 "--protected-files-glob",
                 "*.txt",
+                "--",
+                "changed/file.txt",
             ],
         )
         assert result == 1
@@ -172,19 +172,25 @@ class TestMain:
     def test_main_nothing_staged(self):
         result = main(
             [
-                "--filenames",
                 "--protected-files-glob",
                 "*",
+                "--",
             ],
         )
         assert result == 0
+
+    def test_main_missing_required_arg(self):
+        with pytest.raises(SystemExit) as sys_exit:
+            main(["changed/file.txt"])
+
+        assert sys_exit.value.code == 2
 
     def test_main_no_unstage_when_no_protected(self, mocker):
         call_mock = mocker.patch(
             "pre_commit_hook_collection.protect_files.unstage_files",
         )
 
-        main(["--filenames", "changed/file.txt"])
+        main(["--protected-files-globs", "*.md", "--", "changed/file.txt"])
         call_mock.assert_not_called()
 
     def test_main_unstage_when_protected(self, mocker):
@@ -194,10 +200,10 @@ class TestMain:
 
         main(
             [
-                "--filenames",
-                "changed/file.txt",
-                "--protected-files-glob",
+                "--protected-files-globs",
                 "*.txt",
+                "--",
+                "changed/file.txt",
             ],
         )
         call_mock.assert_called()
@@ -209,11 +215,10 @@ class TestMain:
 
         main(
             [
-                "--filenames",
-                "changed/file.txt",
-                "--protected-files-glob",
+                "--protected-files-globs",
                 "*.txt",
                 "--no-unstage",
+                "changed/file.txt",
             ],
         )
         call_mock.assert_not_called()

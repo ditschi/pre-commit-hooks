@@ -10,7 +10,8 @@
 				"ms-python.python",
 				"ms-azuretools.vscode-docker",
 				"GitHub.vscode-github-actions",
-				"shd101wyy.markdown-preview-enhanced"
+				"shd101wyy.markdown-preview-enhanced",
+				"redhat.vscode-yaml"
 			]
         }
     }

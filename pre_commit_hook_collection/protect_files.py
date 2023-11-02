@@ -22,7 +22,13 @@ def protected_files_changed(
 def unstage_files(filepaths: list[str]) -> None:
     command = ["git", "reset", "--"]
     command.extend(filepaths)
-    subprocess.run(command, check=False, shell=False)
+    subprocess.run(
+        command,
+        check=False,
+        shell=False,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
