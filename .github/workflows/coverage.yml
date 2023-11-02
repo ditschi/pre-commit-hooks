@@ -23,8 +23,9 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install tox
-
+        python3 -m pip install --upgrade pip
+        python3 -m pip install tox
     - name: Run Tox
-      run: tox -e coverage
+      run: |
+        COVERAGE=$(tox -e coverage | tee /dev/tty | grep TOTAL | awk '{print $6}')
+        echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV

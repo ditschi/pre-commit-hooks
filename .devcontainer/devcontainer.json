@@ -1,7 +1,17 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-  "features": {
-    "ghcr.io/devcontainers/features/python:1": {},
-    "ghcr.io/devcontainers-contrib/features/actions-runner:1": {}
-  }
+    "build":{
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    "postCreateCommand": "pip install --user -U pre-commit && pre-commit install-hooks",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+				"ms-python.python",
+				"ms-azuretools.vscode-docker",
+				"GitHub.vscode-github-actions",
+				"shd101wyy.markdown-preview-enhanced"
+			]
+        }
+    }
 }

@@ -1,0 +1,32 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pre-commit-hook-collection = {file = ".", editable = true}
+
+[dev-packages]
+bandit = "*"
+black = "*"
+build = "*"
+covdefaults = "*"
+coverage = "*"
+flake8 = "*"
+isort = "*"
+lxml = "*"
+mccabe = "*"
+mypy = "*"
+pre-commit = "*"
+pylint = "*"
+pyroma = "*"
+pytest = "*"
+pytest-html = "*"
+pytest-mock = "*"
+radon = "*"
+tox = "*"
+twine = "*"
+vulture = "*"
+
+[requires]
+python_version = "3.10"

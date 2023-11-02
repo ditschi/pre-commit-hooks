@@ -43,8 +43,3 @@ repos:
     hooks:
     -   id: mypy
         additional_dependencies: [types-all]
--   repo: .
-    rev: HEAD
-    hooks:
-    -   id: protect-files
-        args: [--protected-files-globs, ".vscode/*", --no-unstange]
