@@ -161,7 +161,6 @@ class TestMain:
     def test_main_failure_when_no_unstage(self):
         result = main(
             [
-                "--filenames",
                 "changed/file.txt",
                 "--protected-files-glob",
                 "*.txt",

@@ -28,27 +28,27 @@ def unstage_files(filepaths: list[str]) -> None:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--filenames",
-        nargs="*",
-        help="Filenames pre-commit believes are changed.",
-    )
-    parser.add_argument(
-        "--protected-files-glob",
-        nargs="*",
+        "--protected-files-globs",
+        nargs="+",
         help="One or more glob patterns to specify protected files.",
-        default=[],
+        required=True,
     )
     parser.add_argument(
         "--no-unstage",
         action="store_true",
         help="Enforce all files are checked, not just staged files.",
     )
+    parser.add_argument(
+        "filenames",
+        nargs="*",
+        help="Filenames pre-commit believes are changed.",
+    )
     args = parser.parse_args(argv)
 
     if not args.filenames:
         return 0
 
-    bad_files = protected_files_changed(args.filenames, args.protected_files_glob)
+    bad_files = protected_files_changed(args.filenames, args.protected_files_globs)
 
     if bad_files and not args.no_unstage:
         unstage_files(bad_files)
