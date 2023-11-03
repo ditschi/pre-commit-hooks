@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  check:
+  packaging-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:

@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  check:
+  security:
     runs-on: ubuntu-latest
     strategy:
       matrix:
