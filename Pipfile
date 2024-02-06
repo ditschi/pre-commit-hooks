@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 pre-commit-hook-collection = {file = ".", editable = true}
-dill = "*"
 
 [dev-packages]
 bandit = "*"
@@ -27,6 +26,7 @@ pytest-mock = "*"
 radon = "*"
 tox = "*"
 twine = "*"
+typing-extensions = "*"
 vulture = "*"
 
 [requires]
