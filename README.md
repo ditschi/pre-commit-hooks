@@ -6,26 +6,24 @@
 
 # pre-commit-hooks
 
-
-
 Collection of pre-commit hooks
 
-## Hooks availble
+## Hooks available
 
 ### protect-files
 
-Protect tracked files from being changed accidentally. This might be useful for files which are tracked by git and therefore are not handled by the .gitifnore file. With this hook accidential changes of these files are prevented.
+Protect tracked files from being changed accidentally. This might be useful for files which are tracked by git and therefore are not handled by the .gitignore file. With this hook accidental changes of these files are prevented.
 
-A list of glob patterns has to be be provided to define the files protected from changes. By default files will be automatically removed von staging area (this can be diabled).
+A list of glob patterns has to be be provided to define the files protected from changes. By default files will be automatically removed von staging area (this can be disabled).
 
 The following args are available with this hook:
 
-  - `--protected-files-globs` (required): one or more globs of protected files
-    -  Note: pre-commit appends the fileanmes of staged files to the command. To seperate  the list of globs from the list of filenames add '--' at the end of the args list
-  - `--no-unstange`: when provided the protected changed files are not automatically unstaged
+- `--protected-files-globs` (required): one or more globs of protected files
+  - Note: pre-commit appends the filenames of staged files to the command. To separate  the list of globs from the list of filenames add '--' at the end of the args list
+- `--no-unstange`: when provided the protected changed files are not automatically unstaged
 
+#### usage
 
-#### usage:
 ```yaml
 -   repo: https://github.com/ditschi/pre-commit-hooks
     rev: v0.1.0
@@ -42,21 +40,20 @@ The following args are available with this hook:
         args: ['--protected-files-globs', '.vscode/*', --no-unstage]
 ```
 
-
 ## Devopment
 
-The recommented way to start the development environment is using the DevContainer in vscode. Alternatively you can install and use  `tox` to setup the environment.
+The recommended way to start the development environment is using the DevContainer in vscode. Alternatively you can install and use  `tox` to setup the environment.
 
-The following comands will help ypu to get started:
+The following commands will help ypu to get started:
 
 ```bash
-# ensure tox and pipenv is installed (alerady done in DevContainer)
+# ensure tox and pipenv is installed (already done in DevContainer)
 python3 -m pip install tox pipenv
 
 # run all default checks
 tox
 
-# only run the specifik test environments (note: check tox.ini foe all environments)
+# only run the specific test environments (note: check tox.ini foe all environments)
 tox -e tests
 tox -e lint
 
