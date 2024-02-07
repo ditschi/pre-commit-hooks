@@ -28,6 +28,7 @@ tox = "*"
 twine = "*"
 typing-extensions = "*"
 vulture = "*"
+dill = "*"
 
 [requires]
 python_version = "3.10"
