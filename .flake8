@@ -1,0 +1,4 @@
+[flake8]
+max-line-length = 120
+# Black: whitespace before ':' in slices — differs from PEP 8 / pycodestyle
+extend-ignore = E203

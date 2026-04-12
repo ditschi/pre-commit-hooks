@@ -1,0 +1,81 @@
+[build-system]
+# setuptools 77+ requires Python ≥3.9; keep a branch for 3.8 editable installs / pip-compile.
+requires = [
+  "setuptools>=61.0,<76; python_version < '3.9'",
+  "setuptools>=77.0.0; python_version >= '3.9'",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pre_commit_hook_collection"
+version = "0.1.0"
+description = "Collection of pre commit hooks."
+readme = "README.md"
+requires-python = ">=3.8,<3.15"
+license = { text = "MIT" }
+authors = [
+  { name = "Christian Ditscher", email = "chris@ditscher.me" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+keywords = ["pre-commit", "git", "hooks", "python"]
+urls = { "Homepage" = "https://github.com/ditschi/pre-commit-hooks" }
+dependencies = []
+
+[project.scripts]
+protect-files = "pre_commit_hook_collection.protect_files:main"
+
+[project.optional-dependencies]
+dev = [
+  "bandit",
+  "black",
+  "build",
+  "covdefaults",
+  "coverage",
+  "flake8",
+  "isort",
+  "lxml",
+  "mccabe",
+  "mypy",
+  "pylint",
+  "pyroma",
+  "pytest",
+  "pytest-html",
+  "pytest-mock",
+  "radon",
+  "twine",
+  "typing-extensions",
+  "uv",
+  "nox[pbs]",
+  "pip-tools",
+  "vulture",
+  "dill", 
+  "pre-commit",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.mypy]
+check_untyped_defs = true
+
+[tool.setuptools.packages.find]
+exclude = ["tests*", "testing*"]
