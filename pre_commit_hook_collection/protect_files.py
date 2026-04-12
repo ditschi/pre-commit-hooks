@@ -54,7 +54,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     if not args.filenames:
         return 0
 
-    bad_files = protected_files_changed(args.filenames, args.protected_files_globs)
+    bad_files = protected_files_changed(
+        args.filenames,
+        args.protected_files_globs,
+    )
 
     if bad_files and not args.no_unstage:
         unstage_files(bad_files)
