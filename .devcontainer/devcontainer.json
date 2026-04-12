@@ -1,18 +1,18 @@
 {
-    "build":{
+    "build": {
         "dockerfile": "Dockerfile",
         "context": ".."
     },
-    "postCreateCommand": "pip install --user -U pre-commit && pre-commit install-hooks",
+    "postCreateCommand": "python --version && uv venv create .venv && . .venv/bin/activate && python -m pip install --upgrade pip && python -m pip install -r requirements-dev-py310.txt && python -m pip install -e . && pre-commit install-hooks",
     "customizations": {
         "vscode": {
             "extensions": [
-				"ms-python.python",
-				"ms-azuretools.vscode-docker",
-				"GitHub.vscode-github-actions",
-				"shd101wyy.markdown-preview-enhanced",
-				"redhat.vscode-yaml"
-			]
+                "ms-python.python",
+                "ms-azuretools.vscode-docker",
+                "GitHub.vscode-github-actions",
+                "shd101wyy.markdown-preview-enhanced",
+                "redhat.vscode-yaml"
+            ]
         }
     }
 }

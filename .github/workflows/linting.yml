@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -24,6 +24,6 @@ jobs:
     - name: Install Dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install tox
-    - name: Run Tox
-      run: tox -e lint
+        python3 -m pip install nox uv
+    - name: Run Nox Lint
+      run: nox -s lint

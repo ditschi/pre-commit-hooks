@@ -1,0 +1,2 @@
+# Development dependencies for this repository
+-e .[dev]

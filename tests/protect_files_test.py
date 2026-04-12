@@ -1,12 +1,12 @@
 from __future__ import annotations
 
+import subprocess
+
 import pytest
 
-from pre_commit_hook_collection.protect_files import (
-    main,
-    protected_files_changed,
-    unstage_files,
-)
+from pre_commit_hook_collection.protect_files import (main,
+                                                      protected_files_changed,
+                                                      unstage_files)
 
 
 class TestProtectedFiles:
@@ -125,14 +125,18 @@ class TestProtectedFiles:
 
 # pylint: disable=too-few-public-methods
 class TestUnstage:
-    def test_unstage_call(self, mocker):
+    def test_unstage_call(self, monkeypatch):
         filepaths = ["file_a", "this/dir/"]
         expected_command = ["git", "reset", "--", "file_a", "this/dir/"]
+        recorded: dict[str, list[str]] = {}
 
-        subprocess_run_mock = mocker.patch("subprocess.run")
+        def fake_run(command, check, shell, stdout, stderr):
+            recorded["command"] = command
+
+        monkeypatch.setattr(subprocess, "run", fake_run)
         unstage_files(filepaths)
 
-        assert subprocess_run_mock.call_args.contains(expected_command)
+        assert recorded["command"] == expected_command
 
 
 class TestMain:
@@ -185,17 +189,31 @@ class TestMain:
 
         assert sys_exit.value.code == 2
 
-    def test_main_no_unstage_when_no_protected(self, mocker):
-        call_mock = mocker.patch(
+    def test_main_no_unstage_when_no_protected(self, monkeypatch):
+        called = False
+
+        def fake_unstage_files(filepaths):
+            nonlocal called
+            called = True
+
+        monkeypatch.setattr(
             "pre_commit_hook_collection.protect_files.unstage_files",
+            fake_unstage_files,
         )
 
         main(["--protected-files-globs", "*.md", "--", "changed/file.txt"])
-        call_mock.assert_not_called()
+        assert called is False
 
-    def test_main_unstage_when_protected(self, mocker):
-        call_mock = mocker.patch(
+    def test_main_unstage_when_protected(self, monkeypatch):
+        called = False
+
+        def fake_unstage_files(filepaths):
+            nonlocal called
+            called = True
+
+        monkeypatch.setattr(
             "pre_commit_hook_collection.protect_files.unstage_files",
+            fake_unstage_files,
         )
 
         main(
@@ -206,11 +224,18 @@ class TestMain:
                 "changed/file.txt",
             ],
         )
-        call_mock.assert_called()
+        assert called is True
 
-    def test_main_no_unstage_when_disabled(self, mocker):
-        call_mock = mocker.patch(
+    def test_main_no_unstage_when_disabled(self, monkeypatch):
+        called = False
+
+        def fake_unstage_files(filepaths):
+            nonlocal called
+            called = True
+
+        monkeypatch.setattr(
             "pre_commit_hook_collection.protect_files.unstage_files",
+            fake_unstage_files,
         )
 
         main(
@@ -221,4 +246,4 @@ class TestMain:
                 "changed/file.txt",
             ],
         )
-        call_mock.assert_not_called()
+        assert called is False
